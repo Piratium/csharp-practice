@@ -14,6 +14,6 @@
 //Console.WriteLine($"Измененный размер массива: {myArray.Length}");
 #endregion
 int[] myArray = { 1, 2, 3 };
-Append append = new Append();
+Append appendArray = new Append(ref myArray);
 
-append.AppendStart(ref myArray);
+appendArray.AppendStart();
