@@ -1,44 +1,65 @@
 ﻿class Append
 {
-    private int[] myArray;
-    private int[] myCopiedArray;
     private int newElement;
-    private int myArrayLength;
-    public Append(ref int[] myArray)
-    {
-        this.myArray = myArray;
-        myCopiedArray = this.myArray;
-        myArrayLength = myArray.Length + 1;
-    }
+    private int[] myCopiedArray;
 
-    private void Initialize()
+    private void Initialize(ref int[] myArray)
     {
         Console.Write("Введите целое число: ");
+
         if (!int.TryParse(Console.ReadLine(), out newElement))
         {
-            Console.WriteLine("Вы ввели не целое число!");
+            Console.WriteLine("Ошибка: введено не целое число!");
+            myArray = null;
             return;
         }
-        myArray = new int[myArrayLength];
+
+        myCopiedArray = myArray;
+        myArray = new int[myArray.Length + 1];
     }
 
-    public void AppendStart()
+    public void AppendStart(ref int[] myArray)
     {
-        Initialize();
-        for (int i = 1; i < myArrayLength; i++)
-            myArray[i] = myCopiedArray[i-1];
+        Initialize(ref myArray);
+        if (myArray == null) return;
+        for (int i = 1; i < myArray.Length; i++)
+            myArray[i] = myCopiedArray[i - 1];
 
         myArray[0] = newElement;
-        Console.WriteLine(string.Join(" ",myArray));
     }
 
-    public void AppendEnd()
+    public void AppendEnd(ref int[] myArray)
     {
-        Initialize();
-        for (int i = 0; i < myArrayLength - 1; i++)
+        Initialize(ref myArray);
+        if (myArray == null) return;
+        for (int i = 0; i < myArray.Length - 1; i++)
             myArray[i] = myCopiedArray[i];
 
         myArray[^1] = newElement;
-        Console.WriteLine(string.Join(" ", myArray));
+    }
+
+    public void AppendById(ref int[] myArray)
+    {
+        Console.WriteLine($"Размер массива: {myArray.Length - 1}");
+        Console.Write("Введите индекс элемента: ");
+        if (!int.TryParse(Console.ReadLine(), out int index))
+        {
+            Console.WriteLine("Формат индекса неверный!");
+            myArray = null;
+            return;
+        }
+
+        Initialize(ref myArray);
+        if (myArray == null) return;
+
+        myArray[index] = newElement;
+
+        for (int i = 0; i < index; i++)
+            myArray[i] = myCopiedArray[i];
+
+        for (int i = index; i < myCopiedArray.Length; i++)
+        {
+            myArray[i + 1] = myCopiedArray[i];
+        }
     }
 }
