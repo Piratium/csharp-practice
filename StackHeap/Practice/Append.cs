@@ -58,8 +58,6 @@
             myArray[i] = myCopiedArray[i];
 
         for (int i = index; i < myCopiedArray.Length; i++)
-        {
             myArray[i + 1] = myCopiedArray[i];
-        }
     }
 }
